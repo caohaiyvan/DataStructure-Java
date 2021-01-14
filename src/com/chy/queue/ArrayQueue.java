@@ -4,6 +4,7 @@ package com.chy.queue;
  * 数组模拟队列
  * 此种实现方式存在问题：为一次性数组，当队列已满，进行出队操作后不能再继续向队列中添加元素
  * 改进：环形队列（CircleArrayQueue）
+ *
  * @author chy
  * @date 2021/1/8 10:55
  */
@@ -37,15 +38,16 @@ public class ArrayQueue {
     }
 
     // 入队
-    public void addQueue(int n){
-        if(isFull()){
+    public void addQueue(int n) {
+        if (isFull()) {
             throw new RuntimeException("队列已满");
         }
-        arr[rear+1] = n;
+        arr[rear + 1] = n;
     }
+
     // 出队
-    public int getQueue(){
-        if(isEmpty()){
+    public int getQueue() {
+        if (isEmpty()) {
             throw new RuntimeException("队列为空");
         }
         return arr[front + 1];

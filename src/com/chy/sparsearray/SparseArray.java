@@ -2,6 +2,7 @@ package com.chy.sparsearray;
 
 /**
  * 稀疏数组
+ *
  * @author chy
  * @date 2020/6/12 13:45
  */
@@ -66,7 +67,7 @@ public class SparseArray {
 
         System.out.println("===================还原为原始数组====================");
         // 从稀疏数组的第一行可知原始数组的行和列数，以及稀疏数组有几行即第三列值+1行
-        int array[][] = new int [sparseArray[0][0]][sparseArray[0][1]];
+        int array[][] = new int[sparseArray[0][0]][sparseArray[0][1]];
         // 从第二行开始遍历稀疏数组
         // 可通过数组.length获取二维数组的行数
         for (int i = 1; i < sparseArray.length; i++) {

@@ -1,7 +1,9 @@
 package com.chy.linkedList;
 
+import java.util.Stack;
+
 /**
- * 单链表的添加和遍历
+ * 单链表
  *
  * @author chy
  * @date 2021/1/8 13:57
@@ -43,7 +45,18 @@ public class SingleLinkedListTest {
         // 查找单链表中倒数第k个元素
         System.out.println(singleLinkedList.findLastNode(singleLinkedList.getHead(), 3));
         System.out.println(singleLinkedList.findLastNode(singleLinkedList.getHead(), 1));
-
+        System.out.println();
+        // 单链表的反转
+        System.out.println("单链表中的元素-------");
+        singleLinkedList.list();
+        System.out.println("反转后-------");
+        singleLinkedList.reverse(singleLinkedList.getHead());
+        singleLinkedList.list();
+        /*
+        System.out.println();
+        // 逆序打印
+        singleLinkedList.reversePrint(singleLinkedList.getHead());
+*/
     }
 }
 
@@ -144,6 +157,7 @@ class SingleLinkedList {
     public void deleteAtEnd() {
         HeroNode temp = head;
         while (true) {
+            // 找到被删除节点的前一个节点
             if (temp.next.next == null) {
                 temp.next = null;
                 break;
@@ -191,10 +205,10 @@ class SingleLinkedList {
     }
 
     /**
-     * 查找单链表中倒数第k个元素
+     * 查找单链表中倒数第k个元素:
+     * 查找单链表中倒数第k个元素需要遍历链表长度 - k 个元素，第链表长度 - k + 1 个元素即为倒数第k个元素
      */
 
-    // 查找单链表中倒数第k个元素需要遍历链表长度 - k 个元素，第链表长度 - k + 1 个元素即为倒数第k个元素
     public HeroNode findLastNode(HeroNode head, int k) {
 
         HeroNode temp = head;
@@ -229,7 +243,54 @@ class SingleLinkedList {
         return temp;
     }
 
+    /**
+     *  单链表的反转：新建一个链表，遍历原链表元素依次插入元素到新链表头节点之后，最后再使原链表的头节点指向新链表的第一个元素
+     *  注意：需要先备份一份temp的下一个元素，否则在第一次temp添加到新链表时会使temp.next为空，导致原链表断开
+     *  因此需要备份，并且添加到新链表后再使辅助变量temp指向刚刚备份的元素，继续遍历原链表元素，重复上述步骤进行添加
+     */
+    public void reverse(HeroNode head) {
+        HeroNode newHead = new HeroNode(109, "109", "109");
+        HeroNode temp = head.next;
+        HeroNode temp1 = null;
+        // 如果链表为空或链表中只有一个元素则不需要进行反转
+        if (temp == null || temp.next == null) {
+            return;
+        }
+        while (true) {
+            if (temp != null) {
+                temp1 = temp.next;
+            }
+            if(temp == null){
+                break;
+            }
 
+            temp.next = newHead.next;
+            newHead.next = temp;
+            temp = temp1;
+
+        }
+        // 原链表的头执行新链表的第一个元素
+        head.next = newHead.next;
+
+
+    }
+
+    /**
+     * 反向打印单链表
+     * 1、使用栈:利用栈后进先出的特点
+     */
+    public void reversePrint(HeroNode head) {
+        HeroNode temp = head.next;
+        Stack<HeroNode> stack = new Stack<HeroNode>();
+        while (temp != null) {
+            stack.push(temp);
+            temp = temp.next;
+        }
+        while (stack.size() > 0) {
+            System.out.println(stack.pop());
+        }
+
+    }
 }
 
 class HeroNode {
